@@ -10,10 +10,10 @@ development:
   <<: *default
   database: spyspace
 
-# test:
-#   <<: *default
-#   database: your_app_test
+test:
+  <<: *default
+  database: spyspace
 
 production:
   <<: *default
-  DATABASE_URL: "postgresql://zakschenck:Z@k5ch3nck1!@localhost:5432/spyspace"
+  url: <%= ENV['DATABASE_URL'] %>
