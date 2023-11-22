@@ -179,10 +179,6 @@ GEM
     rake (13.1.0)
     rdoc (6.6.0)
       psych (>= 4.0.0)
-    redis (5.0.8)
-      redis-client (>= 0.17.0)
-    redis-client (0.18.0)
-      connection_pool
     reline (0.4.0)
       io-console (~> 0.5)
     ruby2_keywords (0.0.5)
@@ -211,7 +207,6 @@ DEPENDENCIES
   puma (>= 5.0)
   rack-cors
   rails (~> 7.1.2)
-  redis (>= 4.0.1)
   tzinfo-data
 
 RUBY VERSION
