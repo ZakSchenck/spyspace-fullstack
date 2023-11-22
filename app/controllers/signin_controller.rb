@@ -4,7 +4,7 @@ class SigninController < ApplicationController
     def create
       user = User.find_by(email: params[:email])
   
-      if user.authenticate(params[:password])
+      if user && user.authenticate(params[:password])
         payload = { user_id: user.id }
         session = JWTSessions::Session.new(payload: payload, refresh_by_access_allowed: true)
         tokens = session.login
@@ -14,7 +14,7 @@ class SigninController < ApplicationController
           httponly: true,
           secure: Rails.env.production?
         )
-        render json: { csrf: tokens[:csrf] } # Fixed typo here from crsf to csrf
+        render json: { csrf: tokens[:csrf] } 
       else
         not_found
       end
