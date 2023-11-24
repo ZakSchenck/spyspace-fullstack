@@ -14,7 +14,7 @@ class SigninController < ApplicationController
           httponly: true,
           secure: Rails.env.production?
         )
-        render json: { csrf: tokens[:csrf] } 
+        render json: { csrf: tokens[:csrf], username: user.username, picture: user.profile_picture, token: tokens, access: JWTSessions.access_cookie } 
       else
         not_found
       end
