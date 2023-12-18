@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://zakschenck.github.io/spyspace-frontend/"
+    origins "https://zakschenck.github.io/spyspace-frontend"
 
     resource "*",
       headers: :any,
