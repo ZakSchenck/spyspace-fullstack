@@ -2,7 +2,8 @@ class Api::V1::RepliesController < ApplicationController
     before_action :set_post
 
     def create
-      @reply = @post.replies.build(reply_params)
+      @reply = @post.replies.build(body: params[:body])
+
       if @reply.save
         render json: @reply, status: :created
       else
@@ -17,6 +18,6 @@ class Api::V1::RepliesController < ApplicationController
     end
   
     def reply_params
-      params.require(:reply).permit(:body, :user_id)
+      params.require(:reply).permit(:body)
     end
   end

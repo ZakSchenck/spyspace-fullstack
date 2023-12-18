@@ -1,28 +1,28 @@
 class Api::V1::PostsController < ApplicationController
 
-  before_action :authorize_access_request!, except: [:show_specific_user_posts, :index]
+  before_action :authorize_access_request!, except: [:show_specific_user_posts, :index, :show]
   before_action :set_post, only: %i[show update destroy]
   
-
-  # GET all posts
-  def index
-    @posts = Post.all
-    render json: @posts, include: :replies
-  end
-
   def show_specific_user_posts
-    user = User.find_by(username: params[:username])
+    username = params[:username].strip 
+      
+    user = User.find_by(username: username)
     if user
       posts = user.posts.includes(:replies)
-      render json: posts, include: :replies
+      render json: posts.as_json(include: { replies: {}, user: { only: [:id, :username, :profile_picture] } })
     else
-      render json: { error: 'User not found' }, status: :not_found
+      render json: { error: "User not found: #{user}" }, status: :not_found
     end
   end
+  
+  def index
+    @posts = Post.includes(:replies, :user).all
+    render json: @posts.as_json(include: { replies: {}, user: { only: [:id, :username, :profile_picture] } })  
+  end
 
-    # GET /posts/1 single post
+  # GET /posts/1 single post
 def show
-  render json: @post, include: :replies
+  render json: @post.as_json(include: { replies: {}, user: { only: [:id, :username, :profile_picture] } })  
 end
 
   # Get all posts from your profile
@@ -62,6 +62,6 @@ end
   end
 
   def post_params
-    params.require(:post).permit(:body, :user_id)
+    params.require(:post).permit(:body)
   end
 end

@@ -8,7 +8,11 @@ namespace :api, defaults: { format: 'json' } do
   end
 end
 
+get 'users/:username/posts', to: 'api/v1/posts#show_specific_user_posts', as: 'user_posts'
+get 'posts/:id', to: 'api/v1/posts#show', as: 'user_post'
+
 root to: "home#index"
+
 
 post "refresh", controller: :refresh, action: :create
 post "signin", controller: :signin, action: :create
